@@ -30,7 +30,7 @@ def release_pooling(conn):
 # Normal Insert
 
 
-def execute_insert(query, params=None, fetchone=True):
+def execute_insert(query, params):
     # Connect to the database
     if use_pooling:
         conn = connection_pooling()
@@ -41,24 +41,17 @@ def execute_insert(query, params=None, fetchone=True):
 
     # Create a cursor
     cur = conn.cursor()
+    rows_affected = 0
     try:
         # Execute the query
-        cur.execute(query, params)
-        conn.commit()
-        logger.debug("🗄️✏️🟢 Query executed and committed")
-
-        # Fetch the results if requested
-        result = None
-        if fetchone:
-            result = cur.fetchone() or () # return an empty tuple if None is returned
-        else:
-            result = cur.fetchall() or [] # return an empty list if None is returned
-            logger.debug(f'🗄️✏️ Fetched results: {result}')
+        with conn:
+            cur.execute(query, params)
+            rows_affected = cur.rowcount  # Get the number of rows affected
+            logger.debug("🗄️✏️🟢 Query executed and committed")
     except Exception as e:
-        logger.error(f"🗄️✏️ Error executing insert query: {e}\n{traceback.format_exc()}")
-        logger.error(f"🗄️✏️ Failed query: {query}")
-        logger.error(f"🗄️✏️ Failed query parameters: {params}")
-        result = None
+        logger.error(f'🗄️✏️ Error executing insert query: {e}\n{traceback.format_exc()}')
+        logger.error(f'🗄️✏️ Failed query: {query}')
+        logger.error(f'🗄️✏️ Failed query parameters: {params}')
 
     # Close the cursor and connection
     cur.close()
@@ -68,7 +61,8 @@ def execute_insert(query, params=None, fetchone=True):
         conn.close()
         logger.debug("🗄️✏️ Cursor and connection closed")
 
-    return result
+    return rows_affected
+
 
 # # # # # # # # # #
 
@@ -116,17 +110,17 @@ def record_uppies(uppies_responses):
     status_code = data['status_code']
     content_type = data['content_type']
     response_time = data['response_time']
-    charset = data['charset']
-    page_last_modified = data['page_last_modified']
-    content_length = data['content_length']
-    server = data['server']
-    x_powered_by = data['x_powered_by']
-    x_content_type_options = data['x_content_type_options']
-    x_frame_options = data['x_frame_options']
-    x_xss_protection = data['x_xss_protection']
-    content_security_policy = data['content_security_policy']
-    strict_transport_security = data['strict_transport_security']
-    etag = data['etag']
+    charset = data['charset'] if data['charset'] else None
+    page_last_modified = data['page_last_modified'] if data['page_last_modified'] else None
+    content_length = data['content_length'] if data['content_length'] else None
+    server = data['server'] if data['server'] else None
+    x_powered_by = data['x_powered_by'] if data['x_powered_by'] else None
+    x_content_type_options = data['x_content_type_options'] if data['x_content_type_options'] else None
+    x_frame_options = data['x_frame_options'] if data['x_frame_options'] else None
+    x_xss_protection = data['x_xss_protection'] if data['x_xss_protection'] else None
+    content_security_policy = data['content_security_policy'] if data['content_security_policy'] else None
+    strict_transport_security = data['strict_transport_security'] if data['strict_transport_security'] else None
+    etag = data['etag'] if data['etag'] else None
 
     query = """
         INSERT INTO results.scan_uppies (
@@ -137,7 +131,6 @@ def record_uppies(uppies_responses):
         )
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
-
     params = (
         url_id, status_code, content_type, response_time, charset,
         page_last_modified, content_length, server, x_powered_by,

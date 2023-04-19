@@ -6,8 +6,8 @@ from data.insert import record_uppies
 
 def uppies(url, url_id):
     # Check if environment variables are present
-    http_proxy = os.environ.get('http_proxy')
-    https_proxy = os.environ.get('https_proxy')
+    http_proxy = os.environ.get('http_proxy', 'http://192.168.1.15:18888')
+    https_proxy = os.environ.get('https_proxy', 'http://192.168.1.15:18888')
 
     # Set proxies if environment variables are present
     proxies = {}

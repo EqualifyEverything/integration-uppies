@@ -17,8 +17,8 @@ COPY src /app/src
 ENV APP_PORT 8085
 
 # Set up the proxy environment variables
-ENV http_proxy http://glutun:8888
-ENV https_proxy http://glutun:8888
+ENV http_proxy http://192.168.1.15:18888
+ENV https_proxy http://192.168.1.15:18888
 
 # Logging Level
 ENV LOG_LEVEL INFO
