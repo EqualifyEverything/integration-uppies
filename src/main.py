@@ -13,7 +13,6 @@ CORS(app)
 @app.route('/up', methods=['POST'])
 def process_urls():
     data = request.json
-
     threads = []
     for item in data:
         url = item['url']
