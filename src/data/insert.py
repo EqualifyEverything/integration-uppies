@@ -129,7 +129,7 @@ def record_uppies(uppies_responses):
     etag = data['etag']
 
     query = """
-        INSERT INTO events.uppies (
+        INSERT INTO results.scan_uppies (
             url_id, status_code, content_type, response_time, charset,
             page_last_modified, content_length, server, x_powered_by,
             x_content_type_options, x_frame_options, x_xss_protection,
@@ -148,7 +148,7 @@ def record_uppies(uppies_responses):
     rows_affected = execute_insert(query, params)
 
     if rows_affected == 1:
-        logger.debug('Insert: 🟢 New Record Added...')
+        logger.debug(f'Insert: 🟢 New Record Added for {url_id}')
     else:
         logger.error(f'Insert: Problem adding record. Values: {params}')
         time.sleep(5)

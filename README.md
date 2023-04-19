@@ -1,0 +1,2 @@
+# Uppies Integration
+[![🏗️📤 Build and publish 🐳 images](https://github.com/EqualifyApp/integration-uppies/actions/workflows/containerize.yml/badge.svg)](https://github.com/EqualifyApp/integration-uppies/actions/workflows/containerize.yml)
