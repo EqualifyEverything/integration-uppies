@@ -26,4 +26,4 @@ ENV LOG_LEVEL INFO
 EXPOSE $APP_PORT
 
 # Run the application
-CMD ["python", "main.py"]
+CMD ["python", "src/main.py"]
