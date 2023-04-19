@@ -1,17 +1,17 @@
 # Use alpine with Python pre-installed
 FROM python:3.9-alpine
 
-# Create and set working directory
+# Set the working directory to /app
 WORKDIR /app
 
-# Copy requirements file
-COPY requirements.txt /app/
+# Copy the requirements file into the container
+COPY requirements.txt /app
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install any needed packages specified in requirements.txt
+RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
-# Copy main.py and other necessary files (if any)
-COPY main.py /app/
+# Copy the rest of the application code
+COPY src /app/src
 
 # Env Variables
 ENV APP_PORT 8085
