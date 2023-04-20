@@ -10,7 +10,7 @@ CORS(app)
 
 
 # Endpoints
-@app.route('/up', methods=['POST'])
+@app.route('/yeet', methods=['POST'])
 def process_urls():
     data = request.json
     threads = []
