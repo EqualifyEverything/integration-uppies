@@ -32,7 +32,9 @@ def jump(url, url_id):
     logger.debug(f'Processing: {url}')
     try:
         response = requests.head(url, timeout=5, proxies=proxies)
-        logger.debug(f'URL: {url} - Status code: {response.status_code}, Content-Type: {response.headers.get("Content-Type", "")}, Response time: {response.elapsed.total_seconds()}')
+
+        logger.debug(f'URL: {url} - Status code: {response.status_code}')
+
         data = {
             'status_code': response.status_code,
             'content_type': response.headers.get('Content-Type', ''),
@@ -108,11 +110,37 @@ def good_jump(url_id, data):
     message = json.dumps({"url_id": url_id, "data": data})
     logger.debug(
         f'Sending good_jump message for URL ID: {url_id} - Data: {data}')
-    rabbit('i_am_up', message)
+# Send the data to the RabbitMQ queue
+    queue_name = 'i_am_up'
+    channel, connection = rabbit(queue_name, message)
+    if channel and connection:
+        logger.info(f'🏆 Message sent to {queue_name}!')
+    else:
+        logger.error(f'Sick Rabbit! Sick Rabbit! Sick Rabbit! {queue_name}')
+
+    # Send a confirmation message to the axe_speed queue
+    queue_name = 'uppies_speed'
+    body = 'VICTORY'
+    channel, connection = rabbit(queue_name, body)
+    if channel and connection:
+        logger.info(f'🏆 Message sent to {queue_name}!')
+
+        # Import and call the consume_urls function here
+        from main import consume_urls
+        consume_urls()
+
+    else:
+        logger.error(f'Sick Rabbit! Sick Rabbit! Sick Rabbit! {queue_name}')
 
 
 def bad_jump(url_id, data):
     message = json.dumps({"url_id": url_id, "data": data})
     logger.debug(
-        f'Sending bad_jump message for URL ID: {url_id} - Data: {data}')
-    rabbit('i_am_down', message)
+        f'Sending good_jump message for URL ID: {url_id} - Data: {data}')
+# Send the data to the RabbitMQ queue
+    queue_name = 'i_am_down'
+    channel, connection = rabbit(queue_name, message)
+    if channel and connection:
+        logger.info(f'🏆 Message sent to {queue_name}!')
+    else:
+        logger.error(f'Sick Rabbit! Sick Rabbit! Sick Rabbit! {queue_name}')

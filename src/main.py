@@ -5,7 +5,7 @@ from concurrent.futures import ThreadPoolExecutor, TimeoutError
 from flask import Flask, jsonify, request, Response
 from flask_cors import CORS
 from utils.watch import logger
-from utils.jump import jump
+from utils.process import jump, bad_jump
 import importlib
 from utils.auth import catch_rabbits
 from utils.metrics import (
@@ -16,6 +16,7 @@ from utils.metrics import (
 from prometheus_client import generate_latest
 from functools import wraps
 import time
+
 
 app = Flask(__name__)
 CORS(app)
@@ -56,7 +57,7 @@ def consume_urls():
                 message = json.loads(body.decode('utf-8'))
                 url = message.get('url')
                 url_id = message.get('url_id')
-                with ThreadPoolExecutor(max_workers=5) as executor:
+                with ThreadPoolExecutor(max_workers=10) as executor:
                     try:
                         future = executor.submit(jump, url, url_id)
                         # Set a timeout of 15 seconds
@@ -64,6 +65,8 @@ def consume_urls():
                     except TimeoutError:
                         logger.error(
                             f'❌ Timeout reached while processing URL: {url}')
+                        data = 'Timeout Error'
+                        bad_jump(url_id, data)
 
                         ch.basic_nack(method.delivery_tag)
 
