@@ -17,8 +17,17 @@ COPY src /app/src
 ENV APP_PORT 8085
 
 # Set up the proxy environment variables
-ENV http_proxy http://192.168.1.15:18888
-ENV https_proxy http://192.168.1.15:18888
+ENV PROXY_HTTP gluetun:8888
+ENV PROXY_HTTPS gluetun:8888
+
+# Rabbit Info
+ENV RABBIT_USERNAME=worker_uppies
+ENV RABBIT_PASSWORD=pass_the_uppies_please
+# ENV RABBIT_HOST
+ENV RABBIT_VHOST=gova11y
+ENV RABBIT_QUEUE_IN=am_i_up
+ENV RABBIT_QUEUE_OUT=i_am_up
+ENV RABBIT_QUEUE_ERROR=i_am_down
 
 # Logging Level
 ENV LOG_LEVEL INFO
