@@ -52,7 +52,7 @@ def catch_rabbits(queue_name, callback):
     """
     logger.debug('Connecting to RabbitMQ server...')
     credentials = pika.PlainCredentials('worker_uppies', 'pass_the_uppies_please')
-    connection = pika.BlockingConnection(pika.ConnectionParameters('192.168.1.29', credentials=credentials, virtual_host='gova11y'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters('rabbit', credentials=credentials, virtual_host='gova11y'))
     logger.debug('Connected to RabbitMQ server!')
 
     logger.debug(f'Declaring queue: {queue_name}...')
