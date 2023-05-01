@@ -50,7 +50,7 @@ def consume_urls():
     Raises:
         Any exceptions raised by the uppies function.
     """
-    queue_name = 'am_i_up'
+    queue_name = 'launch_uppies'
     while True:
         try:
             def callback(ch, method, properties, body):

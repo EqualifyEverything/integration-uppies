@@ -15,8 +15,8 @@ def rabbit(queue_name, message):
         connection (pika.connection.Connection): The connection to the RabbitMQ server.
     """
     logger.debug('Connecting to RabbitMQ server...')
-    credentials = pika.PlainCredentials('worker', 'work4a11ies')
-    connection = pika.BlockingConnection(pika.ConnectionParameters('192.168.1.29', credentials=credentials, virtual_host='gova11y'))
+    credentials = pika.PlainCredentials('worker_uppies', 'pass_the_uppies_please')
+    connection = pika.BlockingConnection(pika.ConnectionParameters('rabbit', credentials=credentials, virtual_host='gova11y'))
     logger.debug('Connected to RabbitMQ server!')
 
     logger.debug(f'Declaring queue: {queue_name}...')
@@ -51,7 +51,7 @@ def catch_rabbits(queue_name, callback):
         pika.exceptions.AMQPConnectionError: If there is an error connecting to the RabbitMQ server.
     """
     logger.debug('Connecting to RabbitMQ server...')
-    credentials = pika.PlainCredentials('worker', 'work4a11ies')
+    credentials = pika.PlainCredentials('worker_uppies', 'pass_the_uppies_please')
     connection = pika.BlockingConnection(pika.ConnectionParameters('192.168.1.29', credentials=credentials, virtual_host='gova11y'))
     logger.debug('Connected to RabbitMQ server!')
 
