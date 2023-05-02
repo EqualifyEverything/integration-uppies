@@ -17,17 +17,17 @@ COPY src /app/src
 ENV APP_PORT 8085
 
 # Set up the proxy environment variables
-ENV PROXY_HTTP nginx:8888
-ENV PROXY_HTTPS nginx:8888
+ENV PROXY_HTTP a11yproxy:8888
+ENV PROXY_HTTPS a11yproxy:8888
 
 # Rabbit Info
-ENV RABBIT_USERNAME=worker_uppies
-ENV RABBIT_PASSWORD=pass_the_uppies_please
+#ENV RABBIT_USERNAME=worker_uppies
+#ENV RABBIT_PASSWORD=pass_the_uppies_please
 # ENV RABBIT_HOST
-ENV RABBIT_VHOST=gova11y
-ENV RABBIT_QUEUE_IN=launch_uppies
-ENV RABBIT_QUEUE_OUT=landing_uppies
-ENV RABBIT_QUEUE_ERROR=oops_workers
+#ENV RABBIT_VHOST=gova11y
+#ENV RABBIT_QUEUE_IN=launch_uppies
+#ENV RABBIT_QUEUE_OUT=landing_uppies
+#ENV RABBIT_QUEUE_ERROR=oops_workers
 
 # Logging Level
 ENV LOG_LEVEL INFO
