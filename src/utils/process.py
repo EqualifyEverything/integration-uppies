@@ -20,8 +20,8 @@ def jump(url, url_id):
     # Set the proxy settings using environment variables
     proxies = {}
     use_proxy = os.environ.get('USE_PROXY', 'true').lower() == 'true'
-    proxy_http = os.environ.get('PROXY_HTTP', '192.168.1.56:8888')
-    proxy_https = os.environ.get('PROXY_HTTPS', '192.168.1.56:8888')
+    proxy_http = os.environ.get('PROXY_HTTP', 'nginx:8888')
+    proxy_https = os.environ.get('PROXY_HTTPS', 'nginx:8888')
     if use_proxy:
         if proxy_http:
             proxies['http'] = proxy_http
@@ -119,7 +119,7 @@ def good_jump(url_id, data):
         logger.error(f'Sick Rabbit! Sick Rabbit! Sick Rabbit! {queue_name}')
 
     # Send a confirmation message to the axe_speed queue
-    queue_name = 'uppies_speed'
+    queue_name = 'speed_uppies'
     body = 'VICTORY'
     channel, connection = rabbit(queue_name, body)
     if channel and connection:
