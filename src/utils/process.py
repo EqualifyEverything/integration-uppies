@@ -1,5 +1,7 @@
 import os
 import requests
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 import json
 from time import time
 from utils.watch import logger
@@ -9,30 +11,45 @@ from utils.metrics import (
     SUCCESS_COUNT, FAILURE_COUNT)
 
 
-# Queue to get urls to test: am_i_up
-# Queue for recording good urls: i_am_up
-# queue for bad urls: i_am_down
-
-
 def jump(url, url_id):
     logger.debug(f'Starting to JUMP: {url}')
     start_time = time()
+
     # Set the proxy settings using environment variables
-    proxies = {}
     use_proxy = os.environ.get('USE_PROXY', 'true').lower() == 'true'
     proxy_http = os.environ.get('PROXY_HTTP')
     proxy_https = os.environ.get('PROXY_HTTPS')
+
     if use_proxy:
-        if proxy_http:
-            proxies['http'] = proxy_http
-        if proxy_https:
-            proxies['https'] = proxy_https
-    logger.debug(f"Using proxy configuration: http={proxy_http}, https={proxy_https}")
+        proxies = {
+            'http': proxy_http,
+            'https': proxy_https
+        }
+    else:
+        proxies = None
+
+    logger.debug(
+        f"Using proxy configuration: http={proxy_http}, https={proxy_https}")
+
+    session = requests.Session()
+
+    if proxies:
+        session.proxies.update(proxies)
+
+    # Configure retry settings
+    retry_strategy = Retry(
+        total=3,
+        status_forcelist=[429, 500, 502, 503, 504],
+        allowed_methods=["HEAD", "GET", "OPTIONS"]
+    )
+    adapter = HTTPAdapter(max_retries=retry_strategy)
+    session.mount("http://", adapter)
+    session.mount("https://", adapter)
 
     # Test URL
     logger.debug(f'Processing: {url}')
     try:
-        response = requests.head(url, timeout=5, proxies=proxies)
+        response = session.head(url, timeout=5)
 
         logger.debug(f'URL: {url} - Status code: {response.status_code}')
 
