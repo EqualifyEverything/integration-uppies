@@ -20,6 +20,10 @@ ENV APP_PORT 8085
 ENV PROXY_HTTP a11yproxy:8888
 ENV PROXY_HTTPS a11yproxy:8888
 
+ENV USE_PROXY true
+
+
+
 # Rabbit Info
 #ENV RABBIT_USERNAME=worker_uppies
 #ENV RABBIT_PASSWORD=pass_the_uppies_please
