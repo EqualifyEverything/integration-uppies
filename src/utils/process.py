@@ -20,13 +20,14 @@ def jump(url, url_id):
     # Set the proxy settings using environment variables
     proxies = {}
     use_proxy = os.environ.get('USE_PROXY', 'true').lower() == 'true'
-    proxy_http = os.environ.get('PROXY_HTTP', 'http://a11yproxy:8888')
-    proxy_https = os.environ.get('PROXY_HTTPS', 'https://a11yproxy:8888')
+    proxy_http = os.environ.get('PROXY_HTTP')
+    proxy_https = os.environ.get('PROXY_HTTPS')
     if use_proxy:
         if proxy_http:
             proxies['http'] = proxy_http
         if proxy_https:
             proxies['https'] = proxy_https
+    logger.debug(f"Using proxy configuration: http={proxy_http}, https={proxy_https}")
 
     # Test URL
     logger.debug(f'Processing: {url}')
