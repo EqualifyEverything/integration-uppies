@@ -49,7 +49,7 @@ def jump(url, url_id):
     # Test URL
     logger.debug(f'Processing: {url}')
     try:
-        response = session.head(url, timeout=5)
+        response = session.head(url, timeout=15)
 
         logger.debug(f'URL: {url} - Status code: {response.status_code}')
 
@@ -159,6 +159,6 @@ def bad_jump(url_id, data):
     queue_name = 'oops_workers'
     channel, connection = rabbit(queue_name, message)
     if channel and connection:
-        logger.info(f'🏆 Message sent to {queue_name}!')
+        logger.info(f'❌ Message sent to {queue_name}!')
     else:
         logger.error(f'Sick Rabbit! Sick Rabbit! Sick Rabbit! {queue_name}')

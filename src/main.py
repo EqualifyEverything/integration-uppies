@@ -57,7 +57,7 @@ def consume_urls():
                 message = json.loads(body.decode('utf-8'))
                 url = message.get('url')
                 url_id = message.get('url_id')
-                with ThreadPoolExecutor(max_workers=10) as executor:
+                with ThreadPoolExecutor(max_workers=15) as executor:
                     try:
                         future = executor.submit(jump, url, url_id)
                         # Set a timeout of 15 seconds
