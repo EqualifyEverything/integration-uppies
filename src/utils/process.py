@@ -22,14 +22,14 @@ def jump(url, url_id):
 
     if use_proxy:
         proxies = {
-            'http': proxy_http,
-            'https': proxy_https
+            'http': f'http://{proxy_http}',
+            'https': f'https://{proxy_https}'
         }
     else:
         proxies = None
 
     logger.debug(
-        f"Using proxy configuration: http={proxy_http}, https={proxy_https}")
+        f"Using proxy configuration: {proxies}")
 
     session = requests.Session()
 
