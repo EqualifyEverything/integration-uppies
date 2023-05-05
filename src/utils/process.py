@@ -23,7 +23,7 @@ def jump(url, url_id):
     if use_proxy:
         proxies = {
             'http': f'http://{proxy_http}',
-            'https': f'https://{proxy_https}'
+            'https': f'http://{proxy_https}'
         }
     else:
         proxies = None
