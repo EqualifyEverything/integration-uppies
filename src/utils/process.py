@@ -49,7 +49,9 @@ def jump(url, url_id):
     # Test URL
     logger.debug(f'Processing: {url}')
     try:
-        response = session.head(url, timeout=15)
+        #response = session.head(url, timeout=15)
+        response = session.get(url, stream=True, timeout=15)
+        print(response.headers)
 
         logger.debug(f'URL: {url} - Status code: {response.status_code}')
 
