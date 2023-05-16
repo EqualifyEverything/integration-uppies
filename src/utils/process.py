@@ -156,7 +156,7 @@ def bad_jump(url_id, data):
     logger.debug(
         f'Sending good_jump message for URL ID: {url_id} - Data: {data}')
 # Send the data to the RabbitMQ queue
-    queue_name = 'oops_workers'
+    queue_name = 'error_uppies'
     channel, connection = rabbit(queue_name, message)
     if channel and connection:
         logger.info(f'❌ Message sent to {queue_name}!')
