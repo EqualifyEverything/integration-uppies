@@ -12,47 +12,29 @@ from utils.metrics import (
 
 
 def jump(url, url_id):
-    logger.debug(f'Starting to JUMP: {url}')
-    start_time = time()
+    logger.debug(f'🌟 Starting to process: {url}')
 
     # Set the proxy settings using environment variables
-    use_proxy = os.environ.get('USE_PROXY', 'true').lower() == 'true'
+    use_proxy = os.environ.get('USE_PROXY', 'false').lower() == 'true'
+    logger.debug(f'USE_PROXY: {use_proxy} ')
     proxy_http = os.environ.get('PROXY_HTTP')
+    if proxy_http:
+        proxy_http = f'http://{proxy_http}'
+    logger.debug(f'PROXY_HTTP: {proxy_http}')
     proxy_https = os.environ.get('PROXY_HTTPS')
+    if proxy_https:
+        proxy_https = f'http://{proxy_https}'
+    logger.debug(f'PROXY_HTTPS: {proxy_https} ')
+    proxies = {'http': proxy_http, 'https': proxy_https} if use_proxy else None
+    logger.debug(f'Proxies: {proxies} ')
 
-    if use_proxy:
-        proxies = {
-            'http': f'http://{proxy_http}',
-            'https': f'http://{proxy_https}'
-        }
-    else:
-        proxies = None
-
-    logger.debug(
-        f"Using proxy configuration: {proxies}")
-
-    session = requests.Session()
-
-    if proxies:
-        session.proxies.update(proxies)
-
-    # Configure retry settings
-    retry_strategy = Retry(
-        total=3,
-        status_forcelist=[429, 500, 502, 503, 504],
-        allowed_methods=["HEAD", "GET", "OPTIONS"]
-    )
-    adapter = HTTPAdapter(max_retries=retry_strategy)
-    session.mount("http://", adapter)
-    session.mount("https://", adapter)
-
-    # Test URL
-    logger.debug(f'Processing: {url}')
+    # response = requests.get(url, proxies=proxies, verify=False, timeout=10)
     try:
-        #response = session.head(url, timeout=15)
-        response = session.get(url, stream=True, timeout=15)
+        response = requests.head(url, proxies=proxies, verify=False, timeout=10)
+        # response = session.head(url, timeout=15)
+        # response = session.get(url, stream=True, timeout=15)
         headers = response.headers
-        logger.debug(f'Headers: {headers}')
+        # logger.debug(f'Headers: {headers}')
 
         logger.debug(f'URL: {url} - Status code: {response.status_code}')
 
@@ -123,8 +105,8 @@ def jump(url, url_id):
         })
         FAILURE_COUNT.labels(endpoint='/jump').inc()
 
-    JUMP_COUNTER.inc()
-    JUMP_LATENCY.observe(time() - start_time)
+    # JUMP_COUNTER.inc()
+    # JUMP_LATENCY.observe(time() - start_time)
 
 
 def good_jump(url_id, data):
