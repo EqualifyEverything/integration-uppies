@@ -51,7 +51,8 @@ def jump(url, url_id):
     try:
         #response = session.head(url, timeout=15)
         response = session.get(url, stream=True, timeout=15)
-        print(response.headers)
+        headers = response.headers
+        logger.debug(f'Headers: {headers}')
 
         logger.debug(f'URL: {url} - Status code: {response.status_code}')
 
