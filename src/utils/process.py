@@ -23,7 +23,7 @@ def jump(url, url_id):
     logger.debug(f'PROXY_HTTP: {proxy_http}')
     proxy_https = os.environ.get('PROXY_HTTPS')
     if proxy_https:
-        proxy_https = f'https://{proxy_https}'
+        proxy_https = f'http://{proxy_https}'
     logger.debug(f'PROXY_HTTPS: {proxy_https} ')
     proxies = {'http': proxy_http, 'https': proxy_https} if use_proxy else None
     logger.debug(f'Proxies: {proxies} ')
