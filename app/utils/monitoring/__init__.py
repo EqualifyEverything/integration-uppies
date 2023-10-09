@@ -10,11 +10,9 @@ def which_extras():
         configure_sentry()
         logger.info('Sentry Configured')
 
-    # Check if PYROSCOPE_AUTH_TOKEN environment variable has a value
-    if os.getenv("PYROSCOPE_AUTH_TOKEN"):
+    # Check if PYROSCOPE_API_KEY environment variable has a value
+    if os.getenv("PYROSCOPE_API_KEY"):
         configure_pyroscope()
         logger.info('Pyroscope Configured')
 
-# Run It
-if __name__ == "__main__":
-    which_extras()
+
