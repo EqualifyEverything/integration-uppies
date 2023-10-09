@@ -1,5 +1,7 @@
 # app/utils/monitoring/pyroscope.py
 import os
+import socket
+import platform
 from .logging import logger
 import pyroscope
 
@@ -31,11 +33,3 @@ def traces_sampler(sampling_context):
     # return a number between 0 and 1 or a boolean
     return 1.0
 
-
-def configure_sentry():
-    sentry_sdk.init(
-        dsn=os.getenv("SENTRY_DSN_REPORTS"),
-        integrations=[FlaskIntegration()],
-        traces_sample_rate=1.0,
-        traces_sampler=traces_sampler  # Optional if you want dynamic sampling
-    )
