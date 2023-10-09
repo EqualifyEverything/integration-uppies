@@ -8,12 +8,7 @@ from utils.watch import logger
 from utils.process import jump, bad_jump
 import importlib
 from utils.auth import catch_rabbits
-from utils.metrics import (
-                            REQUESTS, LATENCY, JUMP_COUNTER,
-                            JUMP_LATENCY, ACTIVE_THREADS,
-                            ERRORS, RETRIES, QUEUE_SIZE,
-                            SUCCESS_COUNT, FAILURE_COUNT)
-from prometheus_client import generate_latest
+
 from functools import wraps
 import time
 
