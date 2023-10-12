@@ -21,6 +21,7 @@ def configure_sentry():
         traces_sample_rate=traces_sampler(),
         profiles_sample_rate=profiles_sampler(),
     )
+    test_sentry()
 
 
 def traces_sampler(sampling_context=None):
@@ -70,10 +71,13 @@ def profiles_sampler(sampling_context=None):
     logger.info(f'Profile Sampling Rate: %s', sampling_rate)
     return sampling_rate
 
-
-# Test
-if __name__ == "__main__":
+def test_sentry():
     try:
         division_by_zero = 1 / 0
     except ZeroDivisionError:
         sentry_sdk.capture_exception()
+
+
+# Test
+if __name__ == "__main__":
+    test_sentry()
