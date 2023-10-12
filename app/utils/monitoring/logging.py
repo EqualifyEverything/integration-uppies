@@ -8,7 +8,8 @@ import json
 # Logger Name and Level
 LOGGER_NAME = "LoggyMcLogFace"
 LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO").upper()
-LOG_VERBOSE = True if LOG_LEVEL == "DEBUG" else os.environ.get("LOG_VERBOSE", "False").lower() == "true"
+LOG_VERBOSE = os.environ.get("LOG_VERBOSE", "False").lower() == "true"
+
 
 if LOG_VERBOSE:
     FMT_STREAM = "%(asctime)s.%(msecs)03d %(levelname)-8s [%(filename)s:%(funcName)s:%(lineno)d] %(message)s"
