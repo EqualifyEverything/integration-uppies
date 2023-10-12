@@ -1,0 +1,12 @@
+{"time": "2023-10-09 01:51:35,065.065", "level": "INFO    ", "file": "sentry.py", "function": "traces_sampler", "line": "46", "message": "Traces Sampling Rate: 1.0"}
+{"time": "2023-10-09 01:51:35,065.065", "level": "INFO    ", "file": "sentry.py", "function": "traces_sampler", "line": "46", "message": "Traces Sampling Rate: 1.0"}
+{"time": "2023-10-09 01:51:35,065.065", "level": "INFO    ", "file": "sentry.py", "function": "profiles_sampler", "line": "70", "message": "Profile Sampling Rate: 1.0"}
+{"time": "2023-10-09 01:51:35,065.065", "level": "INFO    ", "file": "sentry.py", "function": "profiles_sampler", "line": "70", "message": "Profile Sampling Rate: 1.0"}
+{"time": "2023-10-09 01:51:35,112.112", "level": "INFO    ", "file": "__init__.py", "function": "which_extras", "line": "11", "message": "Sentry Configured"}
+{"time": "2023-10-09 01:51:35,112.112", "level": "INFO    ", "file": "__init__.py", "function": "which_extras", "line": "11", "message": "Sentry Configured"}
+{"time": "2023-10-09 01:51:35,113.113", "level": "INFO    ", "file": "pyroscope.py", "function": "configure_pyroscope", "line": "9", "message": "Configuring Pyroscope"}
+{"time": "2023-10-09 01:51:35,113.113", "level": "INFO    ", "file": "pyroscope.py", "function": "configure_pyroscope", "line": "9", "message": "Configuring Pyroscope"}
+{"time": "2023-10-09 01:51:35,123.123", "level": "INFO    ", "file": "pyroscope.py", "function": "configure_pyroscope", "line": "28", "message": "Pyroscope Configured"}
+{"time": "2023-10-09 01:51:35,123.123", "level": "INFO    ", "file": "pyroscope.py", "function": "configure_pyroscope", "line": "28", "message": "Pyroscope Configured"}
+{"time": "2023-10-09 01:51:35,123.123", "level": "INFO    ", "file": "__init__.py", "function": "which_extras", "line": "16", "message": "Pyroscope Configured"}
+{"time": "2023-10-09 01:51:35,123.123", "level": "INFO    ", "file": "__init__.py", "function": "which_extras", "line": "16", "message": "Pyroscope Configured"}
